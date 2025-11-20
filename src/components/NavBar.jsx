@@ -15,7 +15,7 @@ export default function NavBar() {
     fontSize: 16,
     letterSpacing: 0.5,
     marginRight: 2,
-    display: "inline-block"
+    display: "inline-block",
   };
 
   // Style cho link khi hover
@@ -55,24 +55,29 @@ export default function NavBar() {
         fontFamily: "Segoe UI, Arial, sans-serif",
       }}
     >
-      <Link
-        to="/"
-        style={linkStyle}
-        onMouseOver={linkHover}
-        onMouseOut={linkOut}
-      >
-        Home
-      </Link>
-      <Link
-        to="https://thehoang21.github.io/ntp-luong/"
-        style={linkStyle}
-        target="_blank"
-        rel="noopener noreferrer"
-        onMouseOver={linkHover}
-        onMouseOut={linkOut}
-      >
-        Tính lương
-      </Link>
+      {role !== "uservip" && (
+        <Link
+          to="/"
+          style={linkStyle}
+          onMouseOver={linkHover}
+          onMouseOut={linkOut}
+        >
+          Home
+        </Link>
+      )}
+      {role !== "uservip" && (
+        <Link
+          to="https://thehoang21.github.io/ntp-luong/"
+          style={linkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
+          onMouseOver={linkHover}
+          onMouseOut={linkOut}
+        >
+          Tính lương
+        </Link>
+      )}
+
       {currentUser && (
         <Link
           to="/dashboard"
@@ -113,16 +118,28 @@ export default function NavBar() {
           Quality
         </Link>
       )}
-      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+      {/* {role === ("uservip" || "admin") && (
+        <Link
+          to="/christmas"
+          style={linkStyle}
+          onMouseOver={linkHover}
+          onMouseOut={linkOut}
+        >
+          Christmas
+        </Link>
+      )} */}
+      <div
+        style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}
+      >
         {!currentUser ? (
           <Link
             to="/login"
             style={{ ...linkStyle, background: "#6366f1", color: "#fff" }}
-            onMouseOver={e => {
+            onMouseOver={(e) => {
               e.target.style.background = "#818cf8";
               e.target.style.color = "#fff";
             }}
-            onMouseOut={e => {
+            onMouseOut={(e) => {
               e.target.style.background = "#6366f1";
               e.target.style.color = "#fff";
             }}
@@ -142,12 +159,13 @@ export default function NavBar() {
                 borderRadius: 8,
               }}
             >
-              {currentUser.email} <span style={{ color: "#6366f1" }}>({role})</span>
+              {currentUser.email}{" "}
+              <span style={{ color: "#6366f1" }}>({role})</span>
             </span>
             <button
               style={buttonStyle}
-              onMouseOver={e => (e.target.style.background = "#dc2626")}
-              onMouseOut={e => (e.target.style.background = "#ef4444")}
+              onMouseOver={(e) => (e.target.style.background = "#dc2626")}
+              onMouseOut={(e) => (e.target.style.background = "#ef4444")}
               onClick={logout}
             >
               Đăng xuất

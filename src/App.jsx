@@ -8,11 +8,14 @@ import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import RoleRoute from "./components/RoleRoute";
 import Roles from "./pages/Roles";
-
+import  ChristmasMain  from "./modules/Christmas/components/christmasMain";
 
 export default function App() {
   return (
     <>
+    
+    
+
       <NavBar />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -41,8 +44,17 @@ export default function App() {
             </RoleRoute>
           }
         />
+        <Route
+          path="/christmas"
+          element={
+            <RoleRoute roles={["uservip", "admin"]}>
+              <ChristmasMain />
+            </RoleRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     </>
   );
 }

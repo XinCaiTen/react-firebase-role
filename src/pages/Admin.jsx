@@ -23,7 +23,7 @@ export default function Admin() {
   const [err, setErr] = useState("");
 
   // ========= ROLES (system) state =========
-  const [roles, setRoles] = useState(["admin", "user", "quality"]);
+  const [roles, setRoles] = useState(["admin", "user", "quality", "uservip"]);
 
   // Chặn non-admin vào trang
   if (role !== "admin") return <Navigate to="/dashboard" replace />;
