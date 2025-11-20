@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import RoleRoute from "./components/RoleRoute";
 import Roles from "./pages/Roles";
 
+
 export default function App() {
   return (
     <>
@@ -33,18 +34,15 @@ export default function App() {
           }
         />
         <Route
-  path="/roles"
-  element={
-    <RoleRoute roles={["admin"]}>
-      <Roles />
-    </RoleRoute>
-  }
-/>
-
+          path="/roles"
+          element={
+            <RoleRoute roles={["admin"]}>
+              <Roles />
+            </RoleRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      
-
     </>
   );
 }
