@@ -9,7 +9,7 @@ export default function Dashboard() {
       <h2>Chao xìn: {currentUser?.email}</h2>
       <p>Vai trò hiện tại: <b>{role}</b></p>
       <a
-      href="http://localhost:5173/react-firebase-role/#/christmas"
+      href="https://xincaiten.github.io/react-firebase-role/#/christmas"
       rel="noopener noreferrer"
       style={{
         textDecoration: "none",
