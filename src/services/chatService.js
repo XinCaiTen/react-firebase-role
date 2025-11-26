@@ -1,49 +1,54 @@
 // src/services/chatService.js
 import { 
-  collection, 
-  addDoc, 
-  query, 
-  orderBy, 
-  limit, 
-  onSnapshot, 
-  serverTimestamp 
+  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp 
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-// Tên collection trong Firestore
-const ROOM_NAME = "messages"; 
+/**
+ * Tạo ID phòng chat riêng giữa 2 người
+ * Luôn sắp xếp ID để A chat với B giống B chat với A
+ */
+export function getPrivateChatId(uid1, uid2) {
+  return [uid1, uid2].sort().join("_");
+}
 
 /**
- * Gửi tin nhắn mới lên Firestore
- * @param {object} user - Object user hiện tại (uid, email...)
- * @param {string} text - Nội dung tin nhắn
+ * Gửi tin nhắn (Hỗ trợ cả chat chung và riêng)
+ * @param {string} roomId - ID của phòng (VD: "messages" hoặc "uidA_uidB")
+ * @param {boolean} isPrivate - Có phải chat riêng không?
  */
-export async function sendMessage(user, text) {
+export async function sendMessage(user, text, roomId = "messages", isPrivate = false) {
   if (!text.trim()) return;
 
-  await addDoc(collection(db, ROOM_NAME), {
+  // Nếu là chat riêng, path là: private_chats/{roomId}/messages
+  // Nếu là chat chung, path là: messages (như cũ)
+  const collectionRef = isPrivate 
+    ? collection(db, "private_chats", roomId, "messages")
+    : collection(db, "messages");
+
+  await addDoc(collectionRef, {
     text: text.trim(),
     uid: user.uid,
-    email: user.email, // Lưu email để hiển thị tên người gửi
-    role: user.role || "user", // Lưu role để hiển thị màu sắc (nếu cần)
-    createdAt: serverTimestamp(), // Dùng giờ server để sắp xếp chuẩn xác
+    email: user.email,
+    role: user.role || "user",
+    createdAt: serverTimestamp(),
   });
 }
 
 /**
- * Lắng nghe tin nhắn realtime
- * @param {function} callback - Hàm set state ở component để update UI
- * @returns {function} - Hàm unsubscribe để huỷ lắng nghe khi component unmount
+ * Lắng nghe tin nhắn realtime theo phòng
  */
-export function subscribeMessages(callback) {
-  // Lấy 100 tin nhắn gần nhất, sắp xếp theo thời gian tăng dần
+export function subscribeMessages(callback, roomId = "messages", isPrivate = false) {
+  const collectionRef = isPrivate 
+    ? collection(db, "private_chats", roomId, "messages")
+    : collection(db, "messages");
+
   const q = query(
-    collection(db, ROOM_NAME),
+    collectionRef,
     orderBy("createdAt", "asc"),
     limit(100)
   );
 
-  // onSnapshot giúp nhận dữ liệu realtime mỗi khi có thay đổi trên DB
   return onSnapshot(q, (snapshot) => {
     const messages = snapshot.docs.map((doc) => ({
       id: doc.id,
