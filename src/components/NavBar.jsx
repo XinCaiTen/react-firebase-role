@@ -55,16 +55,36 @@ export default function NavBar() {
         fontFamily: "Segoe UI, Arial, sans-serif",
       }}
     >
-      {role !== "uservip" && (
+      {/* {role !== "uservip" && (
         <Link
-          to="/"
+          to="/home"
           style={linkStyle}
           onMouseOver={linkHover}
           onMouseOut={linkOut}
         >
           Home
         </Link>
+      )} */}
+      {currentUser && (
+        <Link
+          to="/dashboard"
+          style={linkStyle}
+          onMouseOver={linkHover}
+          onMouseOut={linkOut}
+        >
+          Dashboard
+        </Link>
       )}
+      {currentUser && (
+  <Link
+    to="/chat"
+    style={linkStyle}
+    onMouseOver={linkHover}
+    onMouseOut={linkOut}
+  >
+    Phòng Chat
+  </Link>
+)}
       {role !== "uservip" && (
         <Link
           to="https://thehoang21.github.io/ntp-luong/"
@@ -77,17 +97,20 @@ export default function NavBar() {
           Tính lương
         </Link>
       )}
-
       {currentUser && (
         <Link
-          to="/dashboard"
+          to="https://thehoang21.github.io/grammar-check/"
           style={linkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
           onMouseOver={linkHover}
           onMouseOut={linkOut}
         >
-          Dashboard
+          Kiểm tra ngữ pháp
         </Link>
       )}
+
+      
       {role === "admin" && (
         <>
           <Link

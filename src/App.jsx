@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import RoleRoute from "./components/RoleRoute";
 import Roles from "./pages/Roles";
 import  ChristmasMain  from "./modules/Christmas/components/christmasMain";
+import ChatRoom from "./pages/ChatRoom";
 
 export default function App() {
   return (
@@ -52,6 +53,14 @@ export default function App() {
             </RoleRoute>
           }
         />
+        <Route
+  path="/chat"
+  element={
+    <PrivateRoute>
+      <ChatRoom />
+    </PrivateRoute>
+  }
+/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       

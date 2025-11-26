@@ -9,10 +9,11 @@ export default function Dashboard() {
       <h2>Chao xìn: {currentUser?.email}</h2>
       <p>Vai trò hiện tại: <b>{role}</b></p>
       <a
-      href="https://xincaiten.github.io/react-firebase-role/#/christmas"
+      href="http://localhost:5173/react-firebase-role/#/christmas"
       rel="noopener noreferrer"
       style={{
         textDecoration: "none",
+        
       }}
     >
       <button
@@ -50,7 +51,7 @@ export default function Dashboard() {
     return (
       <div style={{ padding: 24 }}>
         <h2>Dashboard</h2>
-        <p>Bạn không có quyền truy cập trang này.</p>
+        <p>Chào mừng bạn đến với thế giới của tôi.</p>
       </div>
     );
   }
