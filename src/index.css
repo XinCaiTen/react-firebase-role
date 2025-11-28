@@ -28,6 +28,71 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+  
+  /* Smooth scrolling for mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Touch-friendly buttons */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Ensure form buttons are always visible */
+  form {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Prevent input from growing too much */
+  form input[type="text"], form input:not([type="file"]) {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  
+  /* Ensure submit button is always visible */
+  form button[type="submit"] {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+  }
+  
+  /* Make other buttons compact */
+  form button:not([type="submit"]) {
+    flex-shrink: 0 !important;
+    width: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+  }
 }
 
 h1 {
